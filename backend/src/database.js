@@ -1,10 +1,15 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/instaya',{
-    //useCreateIndex:true,
-    //useNewUrlParser:true,
-    //useFindAndModify:false
+const URI = process.env.MONGOOSE_URI
+    ? process.env.MONGOOSE_URI
+    : 'mongodb://127.0.0.1:27017/instaya';
+mongoose.connect(URI, {
+    //useNewUrlParser: true,
+    //useCreateIndex: true
+});
 
-})
-.then(db=>console.log('DB is connected'))
-.catch(err=> console.error(err));
+const connection = mongoose.connection;
+
+connection.once('open', () => {
+    console.log('Database is connected');
+});

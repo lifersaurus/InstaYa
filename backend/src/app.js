@@ -1,9 +1,17 @@
-const express= require('express');
-const app= express();
+const express = require('express');
+const cors = require('cors');
 
-//configuraciones 
-app.set('port', 7000);
+const app = express();
 
+// settings
+app.set('port', process.env.PORT || 4000);
 
+// middlewares 
+app.use(cors());
+app.use(express.json());
 
-module.exports=app;
+// routes
+app.use('/api/fechas', require('./routes/fechas'));
+app.use('/api/users', require('./routes/usrs'));
+
+module.exports = app;
